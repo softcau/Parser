@@ -170,9 +170,7 @@ int main(void){
 
 	printf("Original s1: %s\n", s1);
 	*/
-	
-	memset(action, 0, sizeof(action));
-	memset(goTo, 0, sizeof(goTo));
+
 
 	// Initialize action table
 	action[0][VTYPE] = "s4";
@@ -191,5 +189,3 @@ int main(void){
 	parse(input);
 	return 0;
 }
-
-
