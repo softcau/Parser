@@ -151,9 +151,6 @@ int main(void){
 	buffer[i] = '\0';
 	fclose(file);
 	*/
-	/*sequence input 구현*/
-	//Token input[] = { VTYPE, {ID}, {SEMI} };
-	/*stack inout 구현*/
 	//parse(input);
 	//free(buffer);
 	/*push(0);
@@ -170,7 +167,6 @@ int main(void){
 
 	printf("Original s1: %s\n", s1);
 	*/
-
 
 	// Initialize action table
 	action[0][VTYPE] = "s4";
@@ -189,3 +185,7 @@ int main(void){
 	parse(input);
 	return 0;
 }
+
+vtype_token, num_token, character_token, boolstr_token, literal_token, id_token, if_token,
+else_token, while_token, return_token, addsub_token, multdiv_token, assign_token, comp_token,
+semi_token, comma_token, lparen_token, rparen_token, lbrace_token, rbrace_token, $
