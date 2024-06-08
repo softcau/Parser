@@ -51,11 +51,12 @@ int peek() {
 	return stack[top];
 }
 
-// SLR table(action, goTo)
+// SLR table(action, goTo) 생성
 char* action[100][25];
 int goTo[100][25];
 
-int flag = 0;
+
+// CFG 기반 Reduce 규칙 구현
 void reduce(int rule) {
 	switch (rule) {
 	case 1: // CODE -> VDECL CODE
@@ -226,39 +227,46 @@ void reduce(int rule) {
 		printf("error");
 		exit(1);
 	}
-	
 }
-char* shift_reduce(const char* task_ptr, const char* actionCode) {
 
-	if (actionCode == NULL) {
+// table 구성에 따른 shift/reduce별 동작 구현
+char* shift_reduce(const char* task_ptr, const char* actionCode) {
+	//actionCode는 s4, r1과 같이 테이블 내의 rule을 의미
+	if (actionCode == NULL) { // 스택의 state와 해당 token에 대응하는 규칙이 없을 경우
 		printf("%s\n", "Rejected! - No Action in Parsing Table.");
 		exit(1);
 	}
 
-	int num = atoi(actionCode + 1);
-	if (actionCode[0] == 's') {
+	int num = atoi(actionCode + 1); // s4, r1에서 4,1과 같이 state만 추출
+
+	if (actionCode[0] == 's') { // Shift
 		push(num);
 		task_ptr = strtok(NULL, " ");
 	}
-	else if (actionCode[0] == 'r') {
+	else if (actionCode[0] == 'r') { // Reduce
 		reduce(num);
 	}
-	else if (strcmp(actionCode, "acc") == 0) {
+	else if (strcmp(actionCode, "acc") == 0) { // 주어진 input이 accept 된 경우
 		printf("Accepted\n");
 		flag = 1;
-		
 	}
 	return task_ptr;
 }
+
+//parsing 반복을 위한 제어 변수(input이 accept된 경우 1로 바뀜.)
+int flag = 0;
+
+// 파싱 수행
 void parse(char* task_ptr) {
 	while (flag == 0) {
-		if (task_ptr == NULL) {
+		if (task_ptr == NULL) { // 주어진 input에 대해 모두 shift한 경우, task_ptr을 $로 유지
 			task_ptr = "$";
 		}
 		printf("처리중인 토큰 : %s\n", task_ptr);
-		
-		if (strcmp(task_ptr, "vtype_token") == 0) {
-			task_ptr = shift_reduce(task_ptr, action[peek()][vtype_token]);
+
+		//각 input terminal에 대응하는 작업 수행
+		if (strcmp(task_ptr, "vtype_token") == 0) {//next input symbol이 vtype인 경우
+			task_ptr = shift_reduce(task_ptr, action[peek()][vtype_token]); // table에서 현재 state와 vtype에 대응하는 규칙을 읽음.
 		}
 		else if (strcmp(task_ptr, "num_token") == 0) {
 			task_ptr = shift_reduce(task_ptr, action[peek()][num_token]);
@@ -324,7 +332,7 @@ void parse(char* task_ptr) {
 			task_ptr = shift_reduce(task_ptr, action[peek()][$]);
 			if (flag == 1) { break; }
 		}
-		else {
+		else { // 주어진 input에 잘못된 token이 들어있는 경우
 			printf("Error detected.\n");
 			printf("Please check input sequence.\n");
 			exit(1);
@@ -333,6 +341,7 @@ void parse(char* task_ptr) {
 	}
 }
 
+//스택 생성 및 SLR Parsing table 구성
 void init() {
 	// 스택 생성
 	push(0);
