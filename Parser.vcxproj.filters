@@ -15,16 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="parser.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="table.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="parsertest.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="parsertest2.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
