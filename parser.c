@@ -526,7 +526,7 @@ void parse(char* task_ptr) {
 		if (task_ptr == NULL) { // 주어진 input에 대해 모두 shift한 경우, task_ptr을 $로 유지
 			task_ptr = "$";
 		}
-		printf("처리중인 토큰 : %s\n", task_ptr);
+		printf("next input token : %s\n", task_ptr);
 
 		//각 input terminal에 대응하는 작업 수행
 		if (strcmp(task_ptr, "vtype_token") == 0) {//next input token이 vtype인 경우
