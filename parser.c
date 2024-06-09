@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 10000
 
 //Terminal 및 Nonterminal을 enum 형식을 활용하여 정의
 typedef enum {
@@ -35,7 +35,7 @@ TreeNode* popNode() {
 	return stackNodes[nodeTop--];
 }
 
-TreeNode* createNode(const char* term) {
+TreeNode* createNode(char* term) {
 	TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
 	strcpy(node->term, term);
 	node->child_count = 0;
@@ -492,7 +492,7 @@ void reduce(int rule) {
 int flag = 0;
 
 // table 구성에 따른 shift/reduce별 동작 구현
-char* shift_reduce(const char* task_ptr, const char* actionRule) {
+char* shift_reduce(char* task_ptr, char* actionRule) {
 	//actionRule은 s4, r1과 같이 테이블 내의 rule을 의미
 	if (actionRule == NULL) { // 스택의 state와 해당 token에 대응하는 규칙이 없을 경우
 		printf("%s\n", "Rejected! - No Action in Parsing Table.");
